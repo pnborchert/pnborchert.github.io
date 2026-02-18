@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en-US' }}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  {% seo %}
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+
+  {% include head-custom.html %}
+</head>
+
+<body>
+  <div class="site-wrapper">
+
+    <!-- Animated Gradient Blobs -->
+    <div class="gradient-bg" aria-hidden="true">
+      <div class="gradient-blob gradient-blob--blue"></div>
+      <div class="gradient-blob gradient-blob--cranberry"></div>
+      <div class="gradient-blob gradient-blob--rose"></div>
+      <div class="gradient-blob gradient-blob--blue-2"></div>
+      <div class="gradient-blob gradient-blob--purple"></div>
+      <div class="gradient-blob gradient-blob--warm"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-container">
+      {{ content }}
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ site.title }}. Built with Jekyll.</p>
+    </footer>
+  </div>
+
+</body>
+
+</html>

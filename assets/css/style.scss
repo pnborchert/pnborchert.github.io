@@ -1,0 +1,1083 @@
+---
+---
+@import "fonts";
+@import "rouge-github";
+
+/* ========================================
+   DESIGN SYSTEM — Gradient Canvas
+   ======================================== */
+
+:root {
+  /* Color Palette */
+  --bg-primary: #fafbfe;
+  --bg-card: #ffffff;
+  --accent-blue: #2563eb;
+  --accent-blue-light: #3b82f6;
+  --accent-cranberry: #9b1b30;
+  --accent-rose: #c2185b;
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+  --text-faint: #9ca3af;
+  --border-color: #e5e7eb;
+  --border-light: #f3f4f6;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
+  --shadow-glow-blue: 0 0 30px rgba(37, 99, 235, 0.12);
+  --shadow-glow-cranberry: 0 0 30px rgba(155, 27, 48, 0.1);
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Spacing */
+  --section-gap: 5rem;
+  --card-radius: 16px;
+  --pill-radius: 20px;
+}
+
+
+/* ========================================
+   GLOBAL RESET & BASE
+   ======================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.65;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--accent-blue);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover,
+a:focus {
+  color: var(--accent-cranberry);
+  font-weight: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-primary);
+  margin: 0 0 1rem;
+  line-height: 1.3;
+}
+
+
+/* ========================================
+   LAYOUT
+   ======================================== */
+
+.site-wrapper {
+  position: relative;
+  min-height: 100vh;
+}
+
+.content-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+
+/* ========================================
+   ANIMATED GRADIENT BLOBS (BACKGROUND)
+   ======================================== */
+
+.gradient-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.gradient-bg::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 50px 50px;
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+@keyframes blob-drift {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  33% {
+    transform: translate(30px, -50px) rotate(10deg);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) rotate(-5deg);
+  }
+
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+.gradient-blob {
+  position: absolute;
+  filter: blur(80px);
+  /* Slightly sharper for distinct colors */
+  opacity: 0.6;
+  /* More visible */
+  animation: blob-drift 25s infinite alternate ease-in-out;
+  mix-blend-mode: multiply;
+  /* Better color blending */
+}
+
+/* Unified Mesh: Clustered behind Hero */
+
+/* 1. Main Blue (Top Left Center) */
+.gradient-blob--blue {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle at 40% 40%, var(--accent-blue) 0%, transparent 70%);
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  top: -10%;
+  left: 20%;
+  transform: translateX(-30%);
+  animation-duration: 30s;
+  z-index: 1;
+}
+
+/* 2. Cranberry (Top Right Center) */
+.gradient-blob--cranberry {
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle at 60% 60%, var(--accent-cranberry) 0%, transparent 70%);
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  top: -5%;
+  left: 45%;
+  animation-duration: 25s;
+  animation-delay: -5s;
+  opacity: 0.5;
+  z-index: 2;
+}
+
+/* 3. Rose (Bottom Center Overlap) */
+.gradient-blob--rose {
+  width: 700px;
+  height: 500px;
+  background: radial-gradient(circle at 70% 50%, var(--accent-blue) 5%, transparent 60%);
+  border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%;
+  top: 10%;
+  left: 30%;
+  animation-delay: -10s;
+  opacity: 0.6;
+  z-index: 3;
+}
+
+/* 4. Warm Amber (Highlight) */
+.gradient-blob--warm {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle at 50% 50%, #f59e0b 0%, transparent 60%);
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  top: 5%;
+  left: 40%;
+  animation-duration: 35s;
+  opacity: 0.3;
+  mix-blend-mode: overlay;
+  z-index: 4;
+}
+
+.gradient-blob--warm-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle at 50% 50%, var(--accent-cranberry) 0%, transparent 60%);
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  top: 10%;
+  left: 25%;
+  animation-duration: 35s;
+  opacity: 0.3;
+  mix-blend-mode: overlay;
+  z-index: 4;
+}
+
+/* Secondary/Background blobs (softer) */
+.gradient-blob--blue-2 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--accent-blue-light) 0%, transparent 70%);
+  border-radius: 50%;
+  top: 40%;
+  right: -10%;
+  opacity: 0.15;
+  filter: blur(120px);
+}
+
+.gradient-blob--purple {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+  border-radius: 50%;
+  bottom: -10%;
+  left: -10%;
+  opacity: 0.1;
+  filter: blur(120px);
+}
+
+@keyframes blob-drift {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+
+  25% {
+    transform: translate(40px, -30px) scale(1.08) rotate(2deg);
+  }
+
+  50% {
+    transform: translate(-25px, 20px) scale(0.94) rotate(-1deg);
+  }
+
+  75% {
+    transform: translate(20px, -15px) scale(1.04) rotate(1.5deg);
+  }
+
+  100% {
+    transform: translate(-15px, 25px) scale(0.98) rotate(-0.5deg);
+  }
+}
+
+
+/* ========================================
+   FLOATING NODES CANVAS
+   ======================================== */
+
+#nodes-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+
+/* ========================================
+   HERO SECTION
+   ======================================== */
+
+.hero {
+  text-align: center;
+  padding: 5rem 0 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.hero__photo-wrap {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.hero__photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  /* Removed border and box-shadow to let the organic ring shine */
+  position: relative;
+  z-index: 1;
+}
+
+/* Organic Gradient Blob Ring */
+/* ========================================
+   ORGANIC CLOUDSCAPE (Hero Background)
+   ======================================== */
+
+/* Container for ambient clouds (drifting behind everything) */
+.hero {
+  position: relative;
+  /* z-index managed carefully */
+}
+
+/* Wide Ambient Cloud 1 (Deep Blue) */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: 10%;
+  width: 120%;
+  height: 80%;
+  background: radial-gradient(ellipse at center, #1e40af 0%, transparent 70%);
+  border-radius: 40% 70% 60% 40% / 50% 40% 60% 50%;
+  opacity: 0.08;
+  /* Reduced from 0.15 for readability */
+  filter: blur(40px);
+  z-index: -2;
+  animation: drift-wide 30s ease-in-out infinite alternate;
+}
+
+/* Wide Ambient Cloud 2 (Sky Blue) */
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 10%;
+  right: -20%;
+  width: 100%;
+  height: 70%;
+  background: radial-gradient(ellipse at center, #0ea5e9 0%, transparent 70%);
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  opacity: 0.12;
+  filter: blur(50px);
+  z-index: -2;
+  animation: drift-wide-reverse 35s ease-in-out infinite alternate;
+}
+
+/* Core Glassy Bubbles (Behind Photo) */
+.hero__photo-wrap::before,
+.hero__photo-wrap::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  filter: blur(15px);
+  mix-blend-mode: multiply;
+  opacity: 0.7;
+}
+
+/* Bubble 1: Main Deep Blue Structure (Base Layer) */
+.hero__photo-wrap::before {
+  width: 260%;
+  height: 240%;
+  top: -70%;
+  left: -80%;
+
+  background: conic-gradient(from 180deg,
+      var(--accent-blue),
+      #1d4ed8,
+      /* Darker blue */
+      var(--accent-blue-light),
+      var(--accent-blue));
+
+  border-radius: 40% 60% 70% 40% / 40% 50% 60% 50%;
+  animation: rotate-oval 28s linear infinite;
+  opacity: 0.6;
+}
+
+/* Bubble 2: The "Overlapping Visible Bubble" with Highlights (Middle Layer) */
+/* Bubble 2: The "Overlapping Visible Bubble" with Highlights (Middle Layer) */
+.hero__photo-ring {
+  position: absolute;
+  top: -40%;
+  left: -40%;
+  width: 180%;
+  height: 180%;
+  z-index: -1;
+
+  /* Blue with distinct bright highlights */
+  background: conic-gradient(from 45deg,
+      rgba(224, 242, 254, 0.8) 0%,
+      var(--accent-blue-light) 25%,
+      var(--accent-blue) 50%,
+      rgba(224, 242, 254, 0.6) 75%,
+      var(--accent-blue-light) 100%);
+
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  filter: blur(25px);
+  mix-blend-mode: hard-light;
+  opacity: 0.7;
+
+  animation: rotate-oval-reverse 35s linear infinite;
+}
+
+/* Layered Rings for Depth */
+.hero__photo-ring::before,
+.hero__photo-ring::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: inherit;
+  background: inherit;
+  /* Removed mix-blend-mode overlay to test visibility, or keep it but change z-index */
+  mix-blend-mode: normal;
+  /* Overlay might be invisible on same color. Hard-light base + Overlay same color = invisible? */
+  /* Try Screen or Lighten for inner rings to look like highlights */
+  mix-blend-mode: screen;
+  z-index: 1;
+  /* Bring to front of parent */
+}
+
+.hero__photo-ring::before {
+  width: 130%;
+  height: 130%;
+  opacity: 0.4;
+  filter: blur(15px);
+  animation: rotate-oval 25s linear infinite reverse;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* Subtle stroke */
+}
+
+.hero__photo-ring::after {
+  width: 160%;
+  height: 160%;
+  opacity: 0.3;
+  filter: blur(20px);
+  animation: rotate-oval 30s linear infinite;
+}
+
+/* Bubble 2: The Cranberry/Rose Accent (Smaller, floating) */
+.hero__photo-wrap::after {
+  width: 160%;
+  height: 140%;
+  top: -20%;
+  right: -80%;
+  /* Pushed to side */
+  left: auto;
+
+  background: conic-gradient(from 0deg,
+      transparent 10%,
+      var(--accent-cranberry) 30%,
+      var(--accent-rose) 45%,
+      transparent 70%);
+
+  /* Layered effect for cranberry bubble */
+  box-shadow:
+    inset 0 0 20px rgba(155, 27, 48, 0.3),
+    inset 0 0 40px rgba(155, 27, 48, 0.2);
+
+  border-radius: 50% 30% 70% 50% / 30% 60% 40% 70%;
+  opacity: 0.6;
+  filter: blur(20px);
+  animation: rotate-oval-reverse 25s linear infinite;
+}
+
+/* Animations adapted for Wide/Oval shapes */
+@keyframes drift-wide {
+  0% {
+    transform: translate(-20px, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(20px, -10px) scale(1.05);
+  }
+}
+
+@keyframes drift-wide-reverse {
+  0% {
+    transform: translate(20px, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(-20px, 10px) scale(1.05);
+  }
+}
+
+@keyframes rotate-oval {
+  from {
+    transform: rotate(0deg) scaleX(1.2);
+  }
+
+  to {
+    transform: rotate(360deg) scaleX(1.2);
+  }
+}
+
+@keyframes rotate-oval-reverse {
+  from {
+    transform: rotate(360deg) scale(0.8);
+  }
+
+  to {
+    transform: rotate(0deg) scale(0.8);
+  }
+}
+
+@keyframes morph-oval {
+  0% {
+    border-radius: 40% 80% 60% 40% / 50% 80% 50% 50%;
+  }
+
+  100% {
+    border-radius: 80% 40% 50% 60% / 80% 50% 80% 50%;
+  }
+}
+
+/* ========================================
+   Additional Calm Cloud (Layer 3)
+   ======================================== */
+.hero__content {
+  position: relative;
+  z-index: 5;
+  /* Subtle backing to improve text readability without outline shadows */
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.5) 0%, transparent 100%);
+}
+
+/* The "Calm Giant" - Very slow moving, large ambient cloud */
+.hero__content::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(14, 165, 233, 0.08) 0%, transparent 60%);
+  border-radius: 50%;
+  filter: blur(60px);
+  z-index: -1;
+  opacity: 0.4;
+  /* Reduced from 0.8 to be very subtle */
+  animation: drift-calm 45s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes drift-calm {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(-30px, 20px) scale(1.1);
+  }
+}
+
+/* Removed old ring comments */
+
+.hero__name {
+  font-size: 2.8rem;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.3rem;
+  color: var(--text-primary);
+  position: relative;
+  z-index: 10;
+}
+
+.hero__tagline {
+  font-size: 1.15rem;
+  color: var(--text-primary);
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 10;
+}
+
+.hero__bio {
+  max-width: 620px;
+  margin: 0 auto 1.5rem;
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  line-height: 1.7;
+  font-weight: 450;
+  position: relative;
+  z-index: 10;
+}
+
+/* Social Links Row */
+.hero__socials {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.hero__social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--pill-radius);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.hero__social-link:hover {
+  color: var(--accent-blue);
+  border-color: var(--accent-blue);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+
+/* ========================================
+   TYPING ANIMATION
+   ======================================== */
+
+.typing-container {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.typing-text {
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cranberry));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  vertical-align: text-bottom;
+  background: var(--accent-blue);
+  margin-left: 2px;
+  animation: cursor-blink 1s step-end infinite;
+}
+
+@keyframes cursor-blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+
+/* ========================================
+   SECTION HEADERS
+   ======================================== */
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-cranberry));
+  border-radius: 2px;
+  margin: 0.7rem auto 0;
+}
+
+
+/* ========================================
+   PUBLICATION TILES — 2 COLUMN GRID
+   ======================================== */
+
+.pub-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: var(--section-gap);
+}
+
+.pub-card {
+  background: var(--bg-card);
+  border-radius: var(--card-radius);
+  padding: 1.8rem;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Spotlight overlay */
+.pub-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Deep Blue Spotlight */
+  background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y),
+      rgba(29, 78, 216, 0.06),
+      transparent 40%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.pub-card:hover::before {
+  opacity: 1;
+}
+
+/* Spotlight Border Glow */
+.pub-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Deep Blue Glow */
+  background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y),
+      rgba(29, 78, 216, 0.3),
+      transparent 40%);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pub-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(29, 78, 216, 0.4);
+}
+
+/* Ensure content is above gradients */
+.pub-card>* {
+  position: relative;
+  z-index: 2;
+}
+
+/* Text transitions on hover REMOVED - Keep dark text */
+.pub-card__title,
+.pub-card__desc,
+.pub-card__authors,
+.pub-card__venue {
+  transition: color 0.3s;
+}
+
+/* Link buttons update on card hover - Keep standardized */
+.pub-link {
+  transition: all 0.3s;
+}
+
+.pub-card__venue {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent-blue);
+  margin-bottom: 0.6rem;
+}
+
+.pub-card__title {
+  font-size: 1.05rem;
+  font-weight: 650;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.pub-card__title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.pub-card__title a:hover {
+  color: var(--accent-blue);
+}
+
+.pub-card__authors {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+  line-height: 1.5;
+}
+
+.pub-card__desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  flex: 1;
+  margin-bottom: 1rem;
+}
+
+.pub-card__links {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+.pub-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--pill-radius);
+  font-size: 0.8rem;
+  font-weight: 550;
+  transition: all 0.25s ease;
+}
+
+.pub-link--arxiv {
+  background: rgba(37, 99, 235, 0.08);
+  color: var(--accent-blue);
+}
+
+.pub-link--arxiv:hover {
+  background: var(--accent-blue);
+  color: #fff;
+}
+
+.pub-link--github {
+  background: rgba(155, 27, 48, 0.08);
+  color: var(--accent-cranberry);
+}
+
+.pub-link--github:hover {
+  background: var(--accent-cranberry);
+  color: #fff;
+}
+
+.pub-link--project {
+  background: rgba(75, 85, 99, 0.08);
+  color: var(--text-secondary);
+}
+
+.pub-link--project:hover {
+  background: var(--text-secondary);
+  color: #fff;
+}
+
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+.site-footer {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  position: relative;
+  z-index: 2;
+}
+
+.site-footer a {
+  color: var(--text-muted);
+}
+
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 900px) {
+  .pub-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 4rem 0 2.5rem;
+  }
+
+  .hero__name {
+    font-size: 2rem;
+  }
+
+  .hero__photo {
+    width: 120px;
+    height: 120px;
+  }
+
+  .hero__bio {
+    font-size: 0.95rem;
+  }
+
+  .content-container {
+    padding: 0 1.2rem;
+  }
+
+  .pub-card {
+    padding: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__name {
+    font-size: 1.7rem;
+  }
+
+  .hero__socials {
+    gap: 0.4rem;
+  }
+
+  .hero__social-link {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .typing-container {
+    font-size: 1rem;
+  }
+}
+
+/* ========================================
+   PRINT
+   ======================================== */
+
+@media print {
+
+  .gradient-bg,
+  #nodes-canvas {
+    display: none;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .pub-card {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+}
+
+/* Search Bar Container */
+/* Search Bar Container - Refined */
+.hero__search-container {
+  display: flex;
+  flex-direction: row;
+  /* Inline layout */
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 8rem;
+  /* More space from separate elements */
+  position: relative;
+  z-index: 10;
+}
+
+.hero__search-label {
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 500;
+  opacity: 0.9;
+  white-space: nowrap;
+}
+
+.hero__search-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50px;
+  /* Pill shape */
+
+  padding: 0 1.5rem;
+  /* Horizontal padding */
+  height: 54px;
+  /* Fixed height */
+  min-width: 340px;
+  /* flex handles max-width */
+
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.03),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero__search-bar:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.06),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.hero__search-icon {
+  color: var(--accent-blue);
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+/* Typing Text inside Search Bar */
+.typing-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  background-color: var(--accent-blue);
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Social Icons SVG */
+.hero__social-icon {
+  width: 1.1em;
+  height: 1.1em;
+  fill: currentColor;
+  position: relative;
+  top: -1px;
+}

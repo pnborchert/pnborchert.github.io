@@ -1,0 +1,12 @@
+title: Philipp Borchert
+logo: /assets/img/profile.jpeg
+description: Philipp Borchert | NLP Researcher
+show_downloads: true
+google_analytics:
+theme: jekyll-theme-minimal
+
+social_links:
+  github: https://github.com/pnborchert
+  huggingface: https://huggingface.co/pborchert
+  linkedin: https://www.linkedin.com/in/pborchert/
+  scholar: https://scholar.google.com/citations?user=efKKfygAAAAJ
