@@ -13,7 +13,7 @@ layout: default
     <p class="hero__tagline">Reasoning · AI for Math · Multilingual NLP</p>
   
     <p class="hero__bio">
-      I'm a <b>NLP Researcher</b> fascinated by how we can teach LLMs to reason and tackle complex problems.
+      I'm a <b>Research Scientist</b> fascinated by how we can teach LLMs to reason and tackle complex problems.
       My research spans from multilingual NLP over information extraction to my current work on reasoning in AI for Math at Huawei in London.
       I completed my PhD at KU Leuven, where my research focused on multilinguality and NLP for Business applications.
     </p>
